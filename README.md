@@ -1,4 +1,4 @@
-# Portofolio Magang — Verlita Cahaya Putri Sulistya Ningrum
+# Portofolio Magang
 
 Portofolio satu halaman berbahasa Indonesia berdasarkan CV: profil, pendidikan, organisasi, AQUARA, keterampilan, dan kontak. Next.js 16, React 19, TypeScript, Tailwind CSS, next-themes, dan lucide-react. Tidak menggunakan API runtime, analytics, widget, atau font eksternal.
 
