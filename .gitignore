@@ -34,3 +34,8 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+/.template-backup/
+/private-assets/
+/test-results/
+/*-result.log

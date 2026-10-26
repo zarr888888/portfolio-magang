@@ -1,149 +1,64 @@
-<a href="https://buymeachai.ezee.li/namanbarkiya" target="_blank" rel="noopener noreferrer"><img src="https://res.cloudinary.com/dvt5vkfwz/image/upload/v1767625332/buy_chai_naman.png" alt="Buy Me A Chai" width="200"></a>
+# Portofolio Magang — Verlita Cahaya Putri Sulistya Ningrum
 
-# Next.js 16 Developer Portfolio Template
+Portofolio satu halaman berbahasa Indonesia berdasarkan CV: profil, pendidikan, organisasi, AQUARA, keterampilan, dan kontak. Next.js 16, React 19, TypeScript, Tailwind CSS, next-themes, dan lucide-react. Tidak menggunakan API runtime, analytics, widget, atau font eksternal.
 
-A modern, responsive, and SEO-optimized **Next.js 16 portfolio template** designed for developers, designers, and professionals. This open-source project helps you showcase your skills, experience, and projects with an elegant interface that stands out. Built with server-side rendering, TypeScript, and the latest web standards for optimal performance.
+## Menjalankan lokal
 
-## ✨ Key Features
+```powershell
+Set-Location 'C:\Portofolio\portfolio-magang'
+npm ci --no-audit --no-fund
+npm run dev
+```
 
-- **Professional Experience Timeline**: Showcase your career journey with a visually appealing timeline
-- **Project Showcase**: Display your technical projects with detailed information and live demos
-- **Multiple Themes**: Dark, Light, Retro, Cyberpunk, Aurora, Synthwave, and Paper themes
-- **Responsive Design**: Optimized for all devices (mobile, tablet, desktop)
-- **100% Performance Score**: Fully optimized for speed and Core Web Vitals
-- **SEO-Ready**: Structured data, meta tags, and optimized content
-- **Modern Tech Stack**: Next.js 16, React 19, TypeScript, Tailwind CSS, and shadcn/ui
-- **Easy Customization**: Well-organized code structure with minimal effort required
-- **Animations**: Subtle animations for engaging user experience
-- **Analytics Integration**: Ready for Google Analytics tracking
-- **Contact Form**: Functional contact form with validation
-- **Open Source**: Free to use and modify for your personal portfolio
+Development memakai root tanpa basePath. Setelah perubahan konfigurasi/dependency, restart dev server yang sudah berjalan.
 
-## 🚀 Demo
+## Validasi dan preview static
 
-View the live demo at [https://nbarkiya.xyz/](https://nbarkiya.xyz)
+```powershell
+npm run typecheck
+npm run lint
+npm run build
+npm run verify:export
+npm run preview
+```
 
-https://github.com/namanbarkiya/minimal-next-portfolio/assets/82203888/f93bf5ca-c2bd-4fe5-a413-1050ebf6cf78
+Preview lokal: `http://127.0.0.1:4173/portfolio-magang/`. Hasil build: `C:\Portofolio\portfolio-magang\out`. `npm start` juga menjalankan preview static, bukan server Next.js.
 
-## Ranks #1 on AI Search (top-notch AEO/GEO)
+## Data dan persetujuan publikasi
 
-https://github.com/user-attachments/assets/fc071310-9d1c-4832-877f-23f9569893d7
+- Data utama: `C:\Portofolio\portfolio-magang\config\portfolio.ts`.
+- Email sengaja `null`; jangan aktifkan sebelum pemilik menyetujui publikasinya.
+- Foto publik saat ini tersedia dan telah disetujui pemilik; Hero menggunakan foto tersebut.
+- Foto kandidat dipindahkan tanpa modifikasi ke `C:\Portofolio\portfolio-magang\private-assets\portofolio-unconfirmed.jpeg`.
+- PDF yang belum disetujui dipindahkan ke `C:\Portofolio\portfolio-magang\private-assets\cv-verlita-unapproved.pdf`.
+- PDF publik saat ini beserta seluruh isinya telah disetujui pemilik; Download CV aktif. Persetujuan ini tidak mengaktifkan email kontak website.
+- Semua file dalam public dapat diakses langsung setelah deploy, meskipun tidak ditautkan. Jangan menyimpan dokumen belum disetujui di sana.
+- Screenshot AQUARA opsional: `C:\Portofolio\portfolio-magang\public\images\aquara.webp`. Saat belum tersedia, tampil ilustrasi berlabel, bukan screenshot rekaan.
+- Domain/username GitHub, tautan repository proyek, dan demo belum diberikan; tidak dibuat URL rekaan. Canonical URL dan sitemap belum diaktifkan.
+- Verifikasi mengikuti flag persetujuan dan SHA-256 di config/portfolio.ts. Hanya versi foto/PDF yang disetujui diterima. File tambahan dalam public ditolak sampai allowlist diperbarui berdasarkan persetujuan. Jangan mengganti hash untuk file baru tanpa izin.
 
-## 🛠️ Tech Stack
+## GitHub Pages — hanya setelah persetujuan
 
-- **Framework**: [Next.js 16](https://nextjs.org/) with Turbopack
-- **Language**: [TypeScript](https://www.typescriptlang.org/)
-- **UI Library**: [React 19](https://react.dev/)
-- **Styling**: [Tailwind CSS](https://tailwindcss.com/) + [shadcn/ui](https://ui.shadcn.com/)
-- **Animations**: [Framer Motion](https://www.framer.com/motion/)
-- **Form Handling**: Server actions with validation
-- **Analytics**: Google Analytics + Vercel Analytics
-- **Deployment**: [Vercel](https://vercel.com)
+1. Tinjau perubahan dan isi publik terlebih dahulu. Jangan unggah `.env.local`, `private-assets`, `.template-backup`, atau `test-results`.
+2. Setelah izin, buat repository baru bernama `portfolio-magang`; periksa remote agar tidak mengarah ke repository template. Jangan membawa riwayat proyek lain atau credential.
+3. Commit dan push hanya setelah disetujui pemilik.
+4. Repository Settings → Pages → Source: GitHub Actions.
+5. Actions → Deploy portfolio to GitHub Pages → Run workflow pada branch yang telah ditinjau.
+6. Buka URL hasil job deployment. Workflow hanya `workflow_dispatch`; push tidak otomatis deploy.
 
-## 🔧 Getting Started
+Workflow menggunakan build static, artifact `out`, izin minimum, dan environment `github-pages`. Base path production `/portfolio-magang`; jangan menambahkan prefix kedua pada Next Link. Fungsi `assetPath` digunakan untuk aset public.
 
-To get started with your own portfolio website:
+## Pengujian 26 Oktober 2026
 
-1. Clone this repository:
+- TypeScript, lint TS/TSX, dan build berhasil.
+- Verifikasi output: identitas, tujuh anchor navigasi, basePath, keberadaan aset, tidak ada API dan dokumen privat.
+- Chrome headless pada 1440, 768, 390, 320 px: tidak ada overflow horizontal, tema dapat diganti dan bertahan setelah reload, menu mobile berfungsi, detail proyek dapat dibuka, tidak ada runtime exception atau HTTP error.
+- Screenshot lokal di `C:\Portofolio\portfolio-magang\test-results` (diabaikan Git).
+- Finalisasi: foto dan seluruh isi PDF disetujui melalui konfirmasi pengguna. Hasil pengujian finalisasi dilaporkan terpisah.
+- Workflow GitHub belum dijalankan; deployment nyata belum dilakukan.
 
-   ```bash
-   git clone https://github.com/namanbarkiya/minimal-next-portfolio.git my-portfolio
-   cd my-portfolio
-   ```
+## Keamanan dan lisensi
 
-2. Copy the contents of `.env.copy` to a new `.env` file and fill in the required information.
+Next.js diperbarui terbatas dari 16.0.10 ke 16.4.1, beserta konfigurasi/plugin ESLint Next yang selaras. Tidak menjalankan audit ulang atau `npm audit fix --force`. Dependency template yang tidak lagi diimpor masih dapat tersisa di manifest; static export bukan jaminan bebas risiko dependency/build.
 
-3. Install dependencies:
-
-   ```bash
-   npm install
-   # or
-   yarn install
-   # or
-   pnpm install
-   ```
-
-4. Start the development server:
-
-   ```bash
-   npm run dev
-   # or
-   yarn dev
-   # or
-   pnpm dev
-   ```
-
-5. Open [http://localhost:3000](http://localhost:3000) in your web browser to see the website.
-
-## 🎨 Customization
-
-Easily personalize your portfolio using the configuration files below:
-
-| Section            | How to Customize                                       | File Location             |
-| ------------------ | ------------------------------------------------------ | ------------------------- |
-| **Personal Info**  | Edit your name, bio, and social links                  | `config/site.ts`          |
-| **Skills**         | Add or modify the technologies and skills you showcase | `config/skills.ts`        |
-| **Projects**       | Highlight your technical projects                      | `config/projects.ts`      |
-| **Experience**     | Add your work and professional experience              | `config/experience.ts`    |
-| **Contributions**  | Display open-source/community contributions            | `config/contributions.ts` |
-| **Colors & Theme** | Customize color palette and themes                     | `tailwind.config.js`      |
-
-All configuration files are well-organized and documented for a smooth customization process.
-
-## 🌟 Features In Detail
-
-### Professional Experience Timeline
-
-An interactive, animated timeline that showcases your career journey with expandable sections for details about each position and company.
-
-### Project Showcase
-
-Display your technical projects with detailed information, technologies used, live demo links, and comprehensive project descriptions.
-
-### Skills Showcase
-
-Visually represent your technical and soft skills with customizable ratings and categories.
-
-### Contact Form Integration
-
-A ready-to-use contact form that can connect to various backend services.
-
-### SEO Optimization
-
-Built-in SEO features with proper meta tags, structured data, and semantic HTML.
-
-## 📱 Performance and Responsiveness
-
-![best-portfolio-website-score](https://github.com/namanbarkiya/minimal-next-portfolio/assets/82203888/3fb9c94d-9d99-4e98-92ea-14aadc91b568)
-![100-score-vercel](https://github.com/namanbarkiya/minimal-next-portfolio/assets/82203888/7cfe28cc-b619-4199-9dab-1cf16723b86d)
-
-This template is optimized for:
-
-- 100% Lighthouse score
-- Excellent Core Web Vitals metrics
-- Responsive design across all device sizes
-- Fast loading times with proper image optimization
-
-## 📄 License
-
-This project is open source and available under the [MIT License](LICENSE).
-
-## 🙏 Acknowledgements
-
-- Design inspired by modern portfolio best practices
-- Built by [Naman Barkiya](https://github.com/namanbarkiya)
-- Icons from [Lucide](https://lucide.dev/)
-
-## 💻 Deploy on Vercel
-
-The easiest way to deploy your portfolio is using [Vercel](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme), the platform from the creators of Next.js.
-
-Check out the [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
-
-## 🌟 Star History
-
-[![Star History Chart](https://api.star-history.com/svg?repos=namanbarkiya/minimal-next-portfolio&type=Date)](https://star-history.com/#namanbarkiya/minimal-next-portfolio&Date)
-
----
-
-**Built with ❤️ by [Naman Barkiya](https://github.com/namanbarkiya)**
+Halaman, API, komponen, konten, serta aset template yang tidak digunakan dipindah ke `C:\Portofolio\portfolio-magang\.template-backup` (lokal, diabaikan Git). Tidak mengubah proyek AQUARA/SAMUDERA. File LICENSE asli dan copyright MIT dipertahankan, bukan digunakan sebagai identitas profil.

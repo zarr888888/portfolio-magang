@@ -1,325 +1,395 @@
-import { Metadata } from "next";
+import { Navigation } from "@/components/portfolio/navigation";
+import {
+  assetPath,
+  contributions,
+  courses,
+  profile,
+  projectStack,
+  publication,
+  responsibilities,
+  skillGroups,
+  softSkills,
+} from "@/config/portfolio";
+import {
+  ArrowDown,
+  ArrowUpRight,
+  BookOpen,
+  CheckCheck,
+  Code2,
+  Download,
+  GraduationCap,
+  Mail,
+  Users,
+  Waves,
+} from "lucide-react";
 import Image from "next/image";
-import Link from "next/link";
-import Script from "next/script";
+import { existsSync } from "node:fs";
+import path from "node:path";
 
-import BlogCard from "@/components/blogs/blog-card";
-import { AnimatedSection } from "@/components/common/animated-section";
-import { AnimatedText } from "@/components/common/animated-text";
-import { ClientPageWrapper } from "@/components/common/client-page-wrapper";
-import { Icons } from "@/components/common/icons";
-import ContributionCard from "@/components/contributions/contribution-card";
-import ExperienceCard from "@/components/experience/experience-card";
-import ProjectCard from "@/components/projects/project-card";
-import SkillsCard from "@/components/skills/skills-card";
-import { Button, buttonVariants } from "@/components/ui/button";
-import { featuredContributions } from "@/config/contributions";
-import { experiences } from "@/config/experience";
-import { pagesConfig } from "@/config/pages";
-import { featuredProjects } from "@/config/projects";
-import { siteConfig } from "@/config/site";
-import { featuredSkills } from "@/config/skills";
-import { getFeaturedBlogs } from "@/lib/blogs";
-import { cn } from "@/lib/utils";
-import profileImg from "@/public/profile-img.jpg";
-
-export const metadata: Metadata = {
-  title: `${pagesConfig.home.metadata.title}`,
-  description:
-    "Naman Barkiya - Applied AI Engineer working at the intersection of AI, data, and scalable software systems. Explore my projects, experience, and contributions.",
-  alternates: {
-    canonical: siteConfig.url,
-  },
-};
-
-export default function IndexPage() {
-  const featuredBlogs = getFeaturedBlogs();
-  // Structured data for personal portfolio
-  const personSchema = {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    name: siteConfig.authorName,
-    url: siteConfig.url,
-    image: siteConfig.ogImage,
-    jobTitle: "Applied AI Engineer",
-    sameAs: [siteConfig.links.github, siteConfig.links.twitter],
-  };
-
-  // Structured data for website as a software application (template)
-  const softwareSchema = {
-    "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    name: "Next.js Portfolio Template",
-    applicationCategory: "DeveloperApplication",
-    operatingSystem: "Web",
-    offers: {
-      "@type": "Offer",
-      price: "0",
-      priceCurrency: "USD",
-    },
-    author: {
-      "@type": "Person",
-      name: siteConfig.authorName,
-      url: siteConfig.url,
-    },
-  };
-
+function Chips({ items }: { items: string[] }) {
   return (
-    <ClientPageWrapper>
-      <Script
-        id="schema-person"
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}
-      />
-      <Script
-        id="schema-software"
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareSchema) }}
-      />
+    <ul className="chips">
+      {items.map((item) => (
+        <li key={item}>{item}</li>
+      ))}
+    </ul>
+  );
+}
 
-      <section className="space-y-6 pb-8 pt-6 mb-0 md:pb-12 md:py-20 lg:py-32 h-screen flex items-center">
-        <div className="container flex max-w-[64rem] flex-col items-center gap-4 text-center -mt-20">
-          <Image
-            src={profileImg}
-            height={100}
-            width={100}
-            sizes="100vw"
-            className="bg-primary rounded-full mb-0 h-auto md:mb-2 w-[60%] max-w-[16rem] border-8 border-primary"
-            alt="Naman Barkiya - Applied AI Engineer Portfolio"
-            priority
-          />
-          <AnimatedText
-            as="h1"
-            delay={0.2}
-            className="font-heading text-3xl sm:text-5xl md:text-6xl lg:text-7xl"
-          >
-            Naman Barkiya
-          </AnimatedText>
-          <AnimatedText
-            as="h3"
-            delay={0.4}
-            className="font-heading text-base sm:text-xl md:text-xl lg:text-2xl"
-          >
-            Applied AI Engineer
-          </AnimatedText>
-          <div className="mt-4 max-w-[42rem] text-center">
-            <p className="leading-normal text-muted-foreground text-sm sm:text-base">
-              Software engineer working at the intersection of AI, data, and
-              scalable software systems.
+export default function Home() {
+  const photoAvailable =
+    publication.photoApproved &&
+    existsSync(path.join(process.cwd(), "public/images/foto-profil.jpg"));
+  const cvAvailable =
+    publication.cvApproved &&
+    existsSync(path.join(process.cwd(), "public/cv/cv-verlita.pdf"));
+  const screenshotAvailable = existsSync(
+    path.join(process.cwd(), "public/images/aquara.webp")
+  );
+  return (
+    <>
+      <a className="skip-link" href="#main">
+        Lewati navigasi
+      </a>
+      <Navigation />
+      <main id="main">
+        <section id="home" className="shell hero" aria-labelledby="hero-title">
+          <div className="hero-copy">
+            <span className="eyebrow availability">
+              <span /> PERSIAPAN MAGANG SEMESTER 6
+            </span>
+            <p className="intro">Halo, saya Verlita.</p>
+            <h1 id="hero-title">
+              Verlita Cahaya Putri <span>Sulistya Ningrum.</span>
+            </h1>
+            <p className="headline">{profile.headline}</p>
+            <p className="hero-description">{profile.description}</p>
+            <div className="button-row">
+              <a className="button primary" href="#projects">
+                Lihat Proyek <ArrowUpRight size={18} />
+              </a>
+              {publication.email && (
+                <a
+                  className="button secondary"
+                  href={`mailto:${publication.email}`}
+                >
+                  Hubungi Saya <Mail size={18} />
+                </a>
+              )}
+              {cvAvailable && (
+                <a
+                  className="button secondary"
+                  href={assetPath("/cv/cv-verlita.pdf")}
+                  download
+                >
+                  Download CV <Download size={18} />
+                </a>
+              )}
+            </div>
+            <div className="hero-meta">
+              <GraduationCap size={20} />
+              <span>
+                D4 Rekayasa Perangkat Lunak
+                <br />
+                <strong>Politeknik Negeri Indramayu</strong>
+              </span>
+            </div>
+          </div>
+          <div className="portrait-area">
+            <div className="portrait-frame">
+              {photoAvailable ? (
+                <Image
+                  src={assetPath("/images/foto-profil.jpg")}
+                  alt={`Foto profil ${profile.name}`}
+                  fill
+                  sizes="(max-width: 760px) 85vw, 400px"
+                  priority
+                  className="portrait-image"
+                />
+              ) : (
+                <div
+                  className="portrait-placeholder"
+                  role="img"
+                  aria-label="Placeholder netral foto profil Verlita"
+                >
+                  <span>VC</span>
+                  <p>Verlita Cahaya</p>
+                  <small>SOFTWARE ENGINEERING STUDENT</small>
+                </div>
+              )}
+            </div>
+            <div className="portrait-note">
+              <Code2 size={24} />
+              <div>
+                Belajar. Berkolaborasi.
+                <br />
+                <strong>Membangun solusi.</strong>
+              </div>
+            </div>
+            <span className="portrait-caption">
+              WEB DEVELOPMENT & SOFTWARE QUALITY
+            </span>
+          </div>
+        </section>
+        <div className="shell focus-strip">
+          <span>FOKUS SAYA</span>
+          <p>
+            <Code2 size={18} /> Web Development
+          </p>
+          <p>
+            <BookOpen size={18} /> UI Design
+          </p>
+          <p>
+            <CheckCheck size={18} /> Software Quality Assurance
+          </p>
+          <a href="#about" aria-label="Baca tentang saya">
+            <ArrowDown size={20} />
+          </a>
+        </div>
+        <section
+          id="about"
+          className="shell section two-column"
+          aria-labelledby="about-title"
+        >
+          <div>
+            <p className="eyebrow">01 / ABOUT ME</p>
+            <h2 id="about-title">
+              Mengenal saya
+              <br />
+              <span>lebih dekat.</span>
+            </h2>
+          </div>
+          <div className="body-copy">
+            <p>
+              Saya mahasiswa D4 Rekayasa Perangkat Lunak di Politeknik Negeri
+              Indramayu dengan ketertarikan pada pengembangan aplikasi web dan
+              mobile.
             </p>
+            <p>
+              Melalui proyek akademik, saya belajar membangun aplikasi
+              menggunakan Flutter, Laravel, PHP, dan MySQL. Saya terbiasa
+              bekerja secara mandiri maupun bersama tim, mulai dari analisis
+              kebutuhan dan desain antarmuka hingga implementasi, pengujian
+              fungsional, dan perbaikan aplikasi.
+            </p>
+            <p>
+              Di luar perkuliahan, saya aktif dalam organisasi kemahasiswaan
+              untuk mengembangkan komunikasi, kolaborasi, dan manajemen waktu.
+            </p>
+            <div className="small-note">
+              Mahasiswa semester 5 · Persiapan magang semester 6
+            </div>
           </div>
-
-          <div className="flex flex-col mt-10 items-center justify-center sm:flex-row sm:space-x-4 gap-3">
-            <AnimatedText delay={0.6}>
-              <Link
-                href={"/resume"}
-                target="_blank"
-                className={cn(buttonVariants({ size: "lg" }))}
-                aria-label="View resume"
-              >
-                <Icons.post className="w-4 h-4 mr-2" /> Resume
-              </Link>
-            </AnimatedText>
-            <AnimatedText delay={0.8}>
-              <Link
-                href={"/contact"}
-                rel="noreferrer"
-                className={cn(
-                  buttonVariants({
-                    variant: "outline",
-                    size: "lg",
-                  })
+        </section>
+        <section
+          id="education"
+          className="tinted section"
+          aria-labelledby="education-title"
+        >
+          <div className="shell">
+            <p className="eyebrow">02 / EDUCATION</p>
+            <h2 id="education-title">
+              Fondasi untuk <span>terus berkembang.</span>
+            </h2>
+            <article className="card education-card">
+              <div className="education-heading">
+                <span className="section-icon">
+                  <GraduationCap size={28} />
+                </span>
+                <div>
+                  <h3>Politeknik Negeri Indramayu</h3>
+                  <p>D4 Rekayasa Perangkat Lunak</p>
+                </div>
+                <span className="date-tag">2024 – Sekarang</span>
+              </div>
+              <h4>Mata kuliah relevan</h4>
+              <ul className="course-grid">
+                {courses.map((course) => (
+                  <li key={course}>
+                    <span />
+                    {course}
+                  </li>
+                ))}
+              </ul>
+            </article>
+          </div>
+        </section>
+        <section
+          id="experience"
+          className="shell section"
+          aria-labelledby="experience-title"
+        >
+          <p className="eyebrow">03 / ORGANIZATION EXPERIENCE</p>
+          <h2 id="experience-title">
+            Bertumbuh melalui <span>kolaborasi.</span>
+          </h2>
+          <div className="experience-layout">
+            <div className="experience-date">
+              <span className="timeline-dot" />
+              <strong>2025 – 2026</strong>
+              <p>Pengalaman organisasi</p>
+            </div>
+            <article className="card">
+              <span className="section-icon">
+                <Users size={25} />
+              </span>
+              <h3>Sekretaris Subdivisi Hubungan Eksternal</h3>
+              <p className="organization">
+                HIMA Rekayasa Perangkat Lunak
+                <br />
+                Politeknik Negeri Indramayu
+              </p>
+              <ul className="bullet-list">
+                {responsibilities.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            </article>
+          </div>
+        </section>
+        <section
+          id="projects"
+          className="tinted section"
+          aria-labelledby="projects-title"
+        >
+          <div className="shell">
+            <p className="eyebrow">04 / FEATURED PROJECT</p>
+            <h2 id="projects-title">
+              Dari ide menjadi <span>pengalaman nyata.</span>
+            </h2>
+            <p className="section-description">
+              Proyek akademik yang mempertemukan desain, pengembangan, dan
+              pengujian perangkat lunak.
+            </p>
+            <article className="card project-card">
+              <div className="project-art">
+                {screenshotAvailable ? (
+                  <Image
+                    src={assetPath("/images/aquara.webp")}
+                    alt="Screenshot aplikasi AQUARA"
+                    width={1000}
+                    height={700}
+                    sizes="(max-width: 760px) 90vw, 500px"
+                  />
+                ) : (
+                  <div className="aquara-illustration">
+                    <Waves size={64} strokeWidth={1.4} />
+                    <span>AQUARA</span>
+                    <p>
+                      Edukasi & komunitas
+                      <br />
+                      perikanan air tawar
+                    </p>
+                    <small>ILUSTRASI PROYEK · BUKAN SCREENSHOT APLIKASI</small>
+                  </div>
                 )}
-                aria-label="Contact Naman Barkiya"
-              >
-                <Icons.contact className="w-4 h-4 mr-2" /> Contact
-              </Link>
-            </AnimatedText>
+              </div>
+              <div className="project-copy">
+                <div className="project-labels">
+                  <span className="badge">Academic Team Project</span>
+                  <span>2025 – 2026</span>
+                </div>
+                <h3>AQUARA</h3>
+                <p className="project-subtitle">
+                  Platform Edukasi dan Komunitas Perikanan Air Tawar
+                </p>
+                <p>
+                  Platform edukasi dan komunitas yang berfokus pada perikanan
+                  air tawar, dikembangkan dalam Project 1 & 2.
+                </p>
+                <Chips items={projectStack} />
+                <p className="project-role">
+                  Kontribusi: UI Design · Web Development · Software Testing
+                </p>
+              </div>
+              <details className="project-details">
+                <summary>
+                  Lihat kontribusi & proses pengerjaan{" "}
+                  <span aria-hidden="true">＋</span>
+                </summary>
+                <ol>
+                  {contributions.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ol>
+              </details>
+            </article>
           </div>
-          <AnimatedText delay={1.2}>
-            <Icons.chevronDown className="h-6 w-6 mt-10" />
-          </AnimatedText>
-        </div>
-      </section>
-      <AnimatedSection
-        direction="up"
-        className="container space-y-6 bg-muted py-10 my-14"
-        id="projects"
-      >
-        <div className="mx-auto flex max-w-[58rem] flex-col items-center space-y-4 text-center">
-          <AnimatedText
-            as="h2"
-            className="font-heading text-3xl leading-[1.1] sm:text-3xl md:text-6xl"
-          >
-            {pagesConfig.projects.title}
-          </AnimatedText>
-          <AnimatedText
-            as="p"
-            delay={0.2}
-            className="max-w-[85%] leading-normal text-muted-foreground sm:text-lg sm:leading-7"
-          >
-            {pagesConfig.projects.description}
-          </AnimatedText>
-        </div>
-        <div className="w-full">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 w-full items-stretch">
-            {featuredProjects.map((exp, index) => (
-              <AnimatedSection
-                key={exp.id}
-                delay={0.1 * (index + 1)}
-                direction="up"
-                className="h-full w-full min-w-0"
-              >
-                <ProjectCard project={exp} />
-              </AnimatedSection>
+        </section>
+        <section
+          id="skills"
+          className="shell section"
+          aria-labelledby="skills-title"
+        >
+          <p className="eyebrow">05 / SKILLS</p>
+          <h2 id="skills-title">
+            Keterampilan yang <span>saya kembangkan.</span>
+          </h2>
+          <p className="section-description">
+            Teknologi dan praktik yang saya gunakan dalam pembelajaran dan
+            proyek akademik.
+          </p>
+          <div className="skills-grid">
+            {skillGroups.map((group, index) => (
+              <article className="card skill-card" key={group.title}>
+                <span className="skill-number">0{index + 1}</span>
+                <h3>{group.title}</h3>
+                <Chips items={group.skills} />
+              </article>
             ))}
           </div>
-        </div>
-        <AnimatedText delay={0.4} className="flex justify-center">
-          <Link href="/projects">
-            <Button variant={"outline"} className="rounded-xl">
-              <Icons.chevronDown className="mr-2 h-4 w-4" /> View All
-            </Button>
-          </Link>
-        </AnimatedText>
-      </AnimatedSection>
-      <AnimatedSection
-        direction="up"
-        className="container space-y-6 py-10 my-14"
-        id="experience"
-      >
-        <div className="mx-auto flex max-w-[58rem] flex-col items-center space-y-4 text-center">
-          <AnimatedText
-            as="h2"
-            className="font-heading text-3xl leading-[1.1] sm:text-3xl md:text-6xl"
-          >
-            {pagesConfig.experience.title}
-          </AnimatedText>
-          <AnimatedText
-            as="p"
-            delay={0.2}
-            className="max-w-[85%] leading-normal text-muted-foreground sm:text-lg sm:leading-7"
-          >
-            {pagesConfig.experience.description}
-          </AnimatedText>
-        </div>
-        <div className="mx-auto grid justify-center gap-4 md:w-full lg:grid-cols-3">
-          {experiences.slice(0, 3).map((experience, index) => (
-            <AnimatedSection
-              key={experience.id}
-              delay={0.1 * (index + 1)}
-              direction="up"
-            >
-              <ExperienceCard experience={experience} />
-            </AnimatedSection>
-          ))}
-        </div>
-        <AnimatedText delay={0.4} className="flex justify-center">
-          <Link href="/experience">
-            <Button variant={"outline"} className="rounded-xl">
-              <Icons.chevronDown className="mr-2 h-4 w-4" /> View All
-            </Button>
-          </Link>
-        </AnimatedText>
-      </AnimatedSection>
-      <AnimatedSection
-        direction="up"
-        className="container space-y-6 bg-muted py-10 my-14"
-        id="contributions"
-      >
-        <div className="mx-auto flex max-w-[58rem] flex-col items-center space-y-4 text-center">
-          <AnimatedText
-            as="h2"
-            className="font-heading text-3xl leading-[1.1] sm:text-3xl md:text-6xl"
-          >
-            {pagesConfig.contributions.title}
-          </AnimatedText>
-          <AnimatedText
-            as="p"
-            delay={0.2}
-            className="max-w-[85%] leading-normal text-muted-foreground sm:text-lg sm:leading-7"
-          >
-            {pagesConfig.contributions.description}
-          </AnimatedText>
-        </div>
-        <ContributionCard contributions={featuredContributions} />
-        <AnimatedText delay={0.4} className="flex justify-center">
-          <Link href="/contributions">
-            <Button variant={"outline"} className="rounded-xl">
-              <Icons.chevronDown className="mr-2 h-4 w-4" /> View All
-            </Button>
-          </Link>
-        </AnimatedText>
-      </AnimatedSection>
-      <AnimatedSection
-        direction="up"
-        className="container space-y-6 py-10 my-14"
-        id="blogs"
-      >
-        <div className="mx-auto flex max-w-[58rem] flex-col items-center space-y-4 text-center">
-          <AnimatedText
-            as="h2"
-            className="font-heading text-3xl leading-[1.1] sm:text-3xl md:text-6xl"
-          >
-            {pagesConfig.blogs.title}
-          </AnimatedText>
-          <AnimatedText
-            as="p"
-            delay={0.2}
-            className="max-w-[85%] leading-normal text-muted-foreground sm:text-lg sm:leading-7"
-          >
-            {pagesConfig.blogs.description}
-          </AnimatedText>
-        </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 w-full items-stretch">
-          {featuredBlogs.map((blog, index) => (
-            <AnimatedSection
-              key={blog.slug}
-              delay={0.1 * (index + 1)}
-              direction="up"
-              className="h-full w-full min-w-0"
-            >
-              <BlogCard blog={blog} />
-            </AnimatedSection>
-          ))}
-        </div>
-        <AnimatedText delay={0.4} className="flex justify-center">
-          <Link href="/blogs">
-            <Button variant={"outline"} className="rounded-xl">
-              <Icons.chevronDown className="mr-2 h-4 w-4" /> View All
-            </Button>
-          </Link>
-        </AnimatedText>
-      </AnimatedSection>
-      <AnimatedSection
-        direction="up"
-        className="container space-y-6 bg-muted py-10 my-14"
-        id="skills"
-      >
-        <div className="mx-auto flex max-w-[58rem] flex-col items-center space-y-4 text-center">
-          <AnimatedText
-            as="h2"
-            className="font-heading text-3xl leading-[1.1] sm:text-3xl md:text-6xl"
-          >
-            {pagesConfig.skills.title}
-          </AnimatedText>
-          <AnimatedText
-            as="p"
-            delay={0.2}
-            className="max-w-[85%] leading-normal text-muted-foreground sm:text-lg sm:leading-7"
-          >
-            {pagesConfig.skills.description}
-          </AnimatedText>
-        </div>
-        <SkillsCard skills={featuredSkills} />
-        <AnimatedText delay={0.4} className="flex justify-center">
-          <Link href="/skills">
-            <Button variant={"outline"} className="rounded-xl">
-              <Icons.chevronDown className="mr-2 h-4 w-4" /> View All
-            </Button>
-          </Link>
-        </AnimatedText>
-      </AnimatedSection>
-    </ClientPageWrapper>
+          <div className="soft-skills">
+            <h3>Lebih dari keterampilan teknis.</h3>
+            <p>Cara saya bekerja, belajar, dan berkolaborasi.</p>
+            <Chips items={softSkills} />
+          </div>
+        </section>
+        <section
+          id="contact"
+          className="shell contact-section"
+          aria-labelledby="contact-title"
+        >
+          <div className="contact-card">
+            <p className="eyebrow">06 / CONTACT</p>
+            <h2 id="contact-title">
+              Mari bertumbuh
+              <br />
+              dan <span>berkontribusi.</span>
+            </h2>
+            <p>
+              Saya mempersiapkan magang semester 6 untuk menerapkan pembelajaran
+              dalam pengembangan web dan software quality assurance.
+            </p>
+            {publication.email ? (
+              <a
+                className="button primary"
+                href={`mailto:${publication.email}`}
+              >
+                Hubungi Saya <Mail size={18} />
+              </a>
+            ) : (
+              <p className="contact-notice">
+                Informasi kontak publik belum tersedia.
+              </p>
+            )}
+            {cvAvailable && (
+              <a
+                className="text-link"
+                href={assetPath("/cv/cv-verlita.pdf")}
+                download
+              >
+                Download CV <Download size={16} />
+              </a>
+            )}
+          </div>
+        </section>
+      </main>
+      <footer className="shell footer">
+        <p>
+          © {new Date().getFullYear()} {profile.name}
+        </p>
+        <a href="#home">Kembali ke atas ↑</a>
+      </footer>
+    </>
   );
 }
